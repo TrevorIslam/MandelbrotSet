@@ -1,5 +1,6 @@
 var maxIterations = 80;
 var zoom = 240;
+var running = false;
 
 function setup () {
   console.clear();
@@ -12,6 +13,13 @@ function setup () {
 }
 
 function draw () {
+  if (running) {
+    main();
+    running = !running;
+  }
+}
+
+function main () {
   resizeCanvas(width, height);
   translate(width * 0.7, height * 0.5);
   for (var i = width * -0.7; i < width * 0.5; i++) {
@@ -29,6 +37,7 @@ function draw () {
 
 $(document).ready(() => {
   attachSliderEvents();
+  attachButtonEvents();
 })
 
 function attachSliderEvents () {
@@ -46,5 +55,12 @@ function attachSliderEvents () {
     let val = parseFloat($(this).val());
     zoom = val;
     $("#zoomvalue").text(val);
+  })
+}
+
+function attachButtonEvents () {
+  $("#startbutton").click(function() {
+    running = !running;
+    console.log(running);
   })
 }
